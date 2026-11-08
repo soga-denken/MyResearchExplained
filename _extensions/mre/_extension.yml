@@ -19,7 +19,7 @@ contributes:
       link-external-newwindow: true
       canonical-url: true
       date-format: iso          # keeps dates machine-readable (also used in JSON-LD)
-      respect-user-color-scheme: true
+      respect-user-color-scheme: false   # always open on the white theme; the navbar toggle still offers dark
       grid:
         sidebar-width: 290px
         body-width: 752px       # floating column = this - 3em = 704px, matching --mre-wide (44rem) in mre.css

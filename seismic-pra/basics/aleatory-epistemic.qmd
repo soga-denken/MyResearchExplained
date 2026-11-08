@@ -37,7 +37,7 @@ bC = np.hypot(bR, bU)
 a = np.geomspace(100, 4000, 400)
 
 # colours chosen to read on both the light and the dark page background
-TEAL, OCHRE, GREY = "#12937F", "#A87414", "#7F9290"
+BLUE, OCHRE, GREY = "#2F6FC4", "#A87414", "#7F8794"
 
 plt.rcParams.update({
     "font.size": 10, "axes.edgecolor": GREY, "axes.labelcolor": GREY,
@@ -48,13 +48,13 @@ fig.patch.set_alpha(0)
 ax.set_facecolor("none")
 
 ax.plot(a, norm.cdf((np.log(a / Am) + 1.645 * bU) / bR), ls="--", lw=1.4, color=GREY)
-ax.plot(a, norm.cdf(np.log(a / Am) / bR), lw=2, color=TEAL, label="Median (50%)")
+ax.plot(a, norm.cdf(np.log(a / Am) / bR), lw=2, color=BLUE, label="Median (50%)")
 ax.plot(a, norm.cdf(np.log(a / Am) / bC), lw=2, color=OCHRE, label="Mean")
 ax.plot(a, norm.cdf((np.log(a / Am) - 1.645 * bU) / bR), ls="--", lw=1.4, color=GREY,
         label="5% and 95% confidence")
 
 ah = Am * np.exp(-1.645 * (bR + bU))
-ax.plot([ah], [0.05], "o", ms=7, mfc="none", mec=TEAL, mew=1.8)
+ax.plot([ah], [0.05], "o", ms=7, mfc="none", mec=BLUE, mew=1.8)
 ax.annotate(f"HCLPF {ah:.0f} Gal", (ah, 0.05), xytext=(-8, 10), textcoords="offset points",
             ha="right", color=GREY)
 ax.annotate("95%", (Am * np.exp(-1.645 * bU), 0.5), xytext=(-8, 0), textcoords="offset points",

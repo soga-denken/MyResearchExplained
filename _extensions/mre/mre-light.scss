@@ -3,24 +3,24 @@
 // The design itself lives in mre.css; these keep Bootstrap's own
 // components (navbar, sidebar, footer, code) on the same palette.
 
-$body-bg: #F3F6F5;
-$body-color: #132125;
-$primary: #0B6B5F;
-$link-color: #0B6B5F;
-$border-color: #D3DDDC;
+$body-bg: #FFFFFF;
+$body-color: #1C1F24;
+$primary: #1F4E8C;
+$link-color: #1F4E8C;
+$border-color: #E2E4E8;
 
 $navbar-bg: #FFFFFF;
-$navbar-fg: #46575B;
-$navbar-hl: #0B6B5F;
+$navbar-fg: #4A5058;
+$navbar-hl: #1F4E8C;
 
-$sidebar-bg: #E9EFEE;
-$sidebar-fg: #46575B;
-$sidebar-hl: #0B6B5F;
+$sidebar-bg: #F6F7F9;
+$sidebar-fg: #4A5058;
+$sidebar-hl: #1F4E8C;
 
-$footer-bg: #E9EFEE;
-$footer-fg: #6A7C80;
+$footer-bg: #F6F7F9;
+$footer-fg: #666D79;
 
-$code-block-bg: #EEF3F2;
+$code-block-bg: #F6F7F9;
 
 $font-family-sans-serif: "Source Sans 3", "Segoe UI", "Helvetica Neue", system-ui, sans-serif;
 $font-family-monospace: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
