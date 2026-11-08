@@ -1,0 +1,65 @@
+project:
+  type: website
+  output-dir: docs          # GitHub Pages: Settings > Pages > Deploy from branch > main /docs
+  # robots.txt and .nojekyll in this folder are copied to docs/ automatically
+
+website:
+  title: "My Research Explained"
+  description: "An introduction to the results of my research on seismic probabilistic risk assessment, explained clearly with the help of AI."
+  site-url: https://pra.kanagawa.jp/   # sitemap.xml, canonical URLs, full URLs in llms.txt and social cards
+  image: assets/og-image.png          # default image when a page is shared
+  open-graph: true
+  twitter-card: true
+  llms-txt: true            # writes llms.txt and a Markdown copy (.llms.md) of every page for LLMs
+  page-navigation: true
+  announcement:             # shown at the top of every page; delete this block when the site is finished
+    content: "**Under development.** This site is a work in progress, and its content has not been verified."
+    type: warning
+    dismissable: false
+    position: below-navbar
+  bread-crumbs: false       # the category chips already show where a page sits
+  navbar:
+    right:
+      - text: Home
+        href: index.qmd
+      - text: About
+        href: about.qmd
+  sidebar:
+    style: floating         # floating keeps the sidebar + body + TOC block centred; docked pins it to the left
+    collapse-level: 1
+    contents:
+      - section: "Seismic PRA"
+        contents:
+          - section: "Basics"
+            contents:
+              - seismic-pra/basics/hazard-fragility.qmd
+              - seismic-pra/basics/aleatory-epistemic.qmd
+          - section: "My research"
+            contents:
+              - seismic-pra/my-research/single-fragility.qmd
+  page-footer:
+    left: "My Research Explained"
+    right: "Built with [Quarto](https://quarto.org)"
+
+# Options for the topic panels (read by _extensions/mre/mre.js)
+mre:
+  accordion: true           # one topic open at a time
+  remember: true            # remember the open topic in the browser
+  topics:
+    "Seismic PRA":
+      note: "How shaking frequency and component fragility combine into an annual failure frequency."
+
+format:
+  mre-html: default         # theme: _extensions/mre
+
+bibliography: references.bib
+
+# Author shown on every article and written into its structured data (JSON-LD).
+# url: your ORCID, researchmap or Google Scholar page.
+# author:
+#   - name: "Your Name"
+#     url: https://orcid.org/0000-0000-0000-0000
+
+execute:
+  freeze: auto              # re-run code only when a page's source changes
+  echo: false

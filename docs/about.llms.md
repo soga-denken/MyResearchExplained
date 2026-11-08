@@ -1,0 +1,11 @@
+# About This Site
+
+What this site covers and how it is built.
+
+## Purpose
+
+This site explains my published research on seismic PRA so that the main points are clear without reading the papers. Each article follows the same order: background, method, results.
+
+## How it is built
+
+The site is built with [Quarto](https://quarto.org) and published on GitHub Pages. Equations are rendered with MathJax.

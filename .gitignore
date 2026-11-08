@@ -1,0 +1,7 @@
+/.quarto/
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
+
+**/*.quarto_ipynb

@@ -1,0 +1,94 @@
+---
+title: "Aleatory and Epistemic Uncertainty"
+description: "Splitting fragility uncertainty into two kinds lets us state a failure probability and how far that probability can be trusted."
+categories: [Seismic PRA, Basics]
+article-type: Primer
+reading-time: About 7 min
+keywords: [Aleatory uncertainty, epistemic uncertainty, confidence, mean fragility]
+---
+
+## Two kinds of uncertainty
+
+Seismic PRA separates the spread in component capacity into two kinds.
+
+- **Aleatory uncertainty $\beta_R$** is inherent randomness. Even for the same level of shaking, the outcome varies with the frequency content of the ground motion and the response of the structure. More data does not reduce it.
+- **Epistemic uncertainty $\beta_U$** is lack of knowledge about the median capacity $A_m$. Further testing and analysis can reduce it.
+
+## A family of fragility curves
+
+Treating $\beta_U$ as uncertainty in the estimated median turns the single fragility curve into a family of curves, one for each confidence level $Q$.
+
+$$
+f_Q(a) = \Phi\!\left(\frac{\ln(a/A_m) + \beta_U\,\Phi^{-1}(Q)}{\beta_R}\right)
+$$
+
+The 95% confidence curve is the upper curve: with 95% confidence, the failure probability is no higher than this. The circle in @fig-family marks the HCLPF point from the previous article.
+
+```{python}
+#| label: fig-family
+#| fig-cap: "Family of fragility curves ($A_m$ = 980 Gal, $\\beta_R$ = 0.30, $\\beta_U$ = 0.35). The dashed lines are the 5% and 95% confidence curves. The circle is the point on the 95% curve where the failure probability is 5% (HCLPF ≈ 336 Gal)."
+#| fig-alt: "Four fragility curves against peak ground acceleration on a log axis from 100 to 4000 Gal. The median and mean curves cross 0.5 at 980 Gal; the 95 percent and 5 percent confidence curves cross 0.5 at 551 and 1743 Gal."
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import norm
+
+Am, bR, bU = 980.0, 0.30, 0.35
+bC = np.hypot(bR, bU)
+a = np.geomspace(100, 4000, 400)
+
+# colours chosen to read on both the light and the dark page background
+TEAL, OCHRE, GREY = "#12937F", "#A87414", "#7F9290"
+
+plt.rcParams.update({
+    "font.size": 10, "axes.edgecolor": GREY, "axes.labelcolor": GREY,
+    "xtick.color": GREY, "ytick.color": GREY, "svg.fonttype": "path",
+})
+fig, ax = plt.subplots(figsize=(6.4, 3.6))
+fig.patch.set_alpha(0)
+ax.set_facecolor("none")
+
+ax.plot(a, norm.cdf((np.log(a / Am) + 1.645 * bU) / bR), ls="--", lw=1.4, color=GREY)
+ax.plot(a, norm.cdf(np.log(a / Am) / bR), lw=2, color=TEAL, label="Median (50%)")
+ax.plot(a, norm.cdf(np.log(a / Am) / bC), lw=2, color=OCHRE, label="Mean")
+ax.plot(a, norm.cdf((np.log(a / Am) - 1.645 * bU) / bR), ls="--", lw=1.4, color=GREY,
+        label="5% and 95% confidence")
+
+ah = Am * np.exp(-1.645 * (bR + bU))
+ax.plot([ah], [0.05], "o", ms=7, mfc="none", mec=TEAL, mew=1.8)
+ax.annotate(f"HCLPF {ah:.0f} Gal", (ah, 0.05), xytext=(-8, 10), textcoords="offset points",
+            ha="right", color=GREY)
+ax.annotate("95%", (Am * np.exp(-1.645 * bU), 0.5), xytext=(-8, 0), textcoords="offset points",
+            ha="right", va="center", color=GREY)
+ax.annotate("5%", (Am * np.exp(1.645 * bU), 0.5), xytext=(8, 0), textcoords="offset points",
+            ha="left", va="center", color=GREY)
+
+ax.set_xscale("log")
+ax.set_xlim(100, 4000)
+ax.set_ylim(0, 1.02)
+ax.set_xticks([100, 200, 500, 1000, 2000], ["100", "200", "500", "1000", "2000"])
+ax.set_yticks([0, 0.25, 0.5, 0.75, 1])
+ax.set_xlabel("Peak ground acceleration [Gal], log scale")
+ax.set_ylabel("Failure probability")
+ax.grid(True, color=GREY, alpha=0.25, lw=0.8)
+for side in ("top", "right"):
+    ax.spines[side].set_visible(False)
+leg = ax.legend(loc="lower right", frameon=False)
+for text in leg.get_texts():
+    text.set_color(GREY)
+fig.tight_layout()
+plt.show()
+```
+
+## Mean fragility
+
+Averaging the family over $Q$ gives a single mean fragility curve.
+
+$$
+\bar f(a) = \Phi\!\left(\frac{\ln(a/A_m)}{\beta_C}\right),\qquad \beta_C = \sqrt{\beta_R^2 + \beta_U^2}
+$$
+
+The mean curve is flatter than the median curve, so it gives higher failure probabilities at low accelerations. At $a = 500$ Gal, for example, the median curve gives 1.2% and the mean curve gives 7.2%.
+
+::: {.callout-tip title="The split is a modelling choice"}
+Whether a given uncertainty counts as aleatory or epistemic is partly a modelling choice. If $\beta_C$ stays the same, the mean fragility does not change, but the spread between the confidence curves does.
+:::

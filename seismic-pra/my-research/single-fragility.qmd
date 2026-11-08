@@ -1,0 +1,52 @@
+---
+title: "Deriving the Fragility Curve of a Single Component"
+description: "How the median capacity and the two logarithmic standard deviations of one component are built up from its design and response analysis."
+categories: [Seismic PRA, My research]
+article-type: Research note
+reading-time: About 5 min
+keywords: [Safety factor, median capacity, lognormal model]
+---
+
+## Three numbers to estimate
+
+Under the lognormal model, a component's fragility curve is fixed by three numbers: the median capacity $A_m$, the aleatory uncertainty $\beta_R$ and the epistemic uncertainty $\beta_U$. Deriving the curve means estimating these three numbers from the component's design, response analysis and test data.
+
+## Median capacity from safety factors
+
+The median capacity is written as the ground-motion level used in the design or response analysis, $a_{\mathrm{ref}}$, multiplied by a median safety factor $F$ [@kennedy1984].
+
+$$
+A_m = F\,a_{\mathrm{ref}},\qquad F = F_C\,F_{RS}
+$$
+
+The capacity factor $F_C$ is the ratio of the component's median strength to the demand in the design analysis. The response factor $F_{RS}$ is the ratio of the design response to the median realistic response. Each is a product of sub-factors for strength, inelastic energy absorption, spectral shape, damping, modelling and soil–structure interaction:
+
+$$
+F_C = F_S\,F_\mu,\qquad F_{RS} = F_{SA}\,F_\delta\,F_M\,F_{SSI}
+$$
+
+## Combining the variabilities
+
+Each sub-factor is treated as lognormal with its own $\beta_{R,i}$ and $\beta_{U,i}$. A product of independent lognormal variables is lognormal, and the variances of the logarithms add, so
+
+$$
+\beta_R = \sqrt{\sum_i \beta_{R,i}^2},\qquad \beta_U = \sqrt{\sum_i \beta_{U,i}^2}
+$$
+
+| Sub-factor                  | Symbol  |   Median | $\beta_{R,i}$ | $\beta_{U,i}$ |
+|:----------------------------|:--------|---------:|-------:|-------:|
+| Strength                    | $F_S$   |     1.80 |   0.00 |   0.20 |
+| Inelastic energy absorption | $F_\mu$ |     1.35 |   0.15 |   0.15 |
+| Spectral shape              | $F_{SA}$ |     1.15 |   0.22 |   0.12 |
+| Damping                     | $F_\delta$ |     1.05 |   0.05 |   0.10 |
+| Modelling                   | $F_M$   |     1.00 |   0.00 |   0.15 |
+| Soil–structure interaction  | $F_{SSI}$ |     1.11 |   0.12 |   0.12 |
+| **Combined**                | $F$     | **3.26** | **0.30** | **0.35** |
+
+: Illustrative breakdown of the safety factor ($a_\mathrm{ref}$ = 300 Gal) {#tbl-factors}
+
+With these values, $A_m = 300 \times 3.26 \approx 977$ Gal, $\beta_R \approx 0.30$ and $\beta_U \approx 0.35$, close to the pump in Table 1 of [Seismic Hazard and Fragility](../basics/hazard-fragility.qmd#tbl-params).
+
+::: {.callout-note title="Assumptions"}
+Combining by root-sum-of-squares assumes the sub-factors are independent. Whether each source of variability counts as aleatory or epistemic is decided factor by factor.
+:::

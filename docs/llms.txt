@@ -1,0 +1,11 @@
+# My Research Explained
+
+> An introduction to the results of my research on seismic probabilistic risk assessment, explained clearly with the help of AI.
+
+## Pages
+
+- [Deriving the Fragility Curve of a Single Component](https://pra.kanagawa.jp/seismic-pra/my-research/single-fragility.llms.md)
+- [Aleatory and Epistemic Uncertainty](https://pra.kanagawa.jp/seismic-pra/basics/aleatory-epistemic.llms.md)
+- [My Research Explained](https://pra.kanagawa.jp/index.llms.md)
+- [About This Site](https://pra.kanagawa.jp/about.llms.md)
+- [Seismic Hazard and Fragility](https://pra.kanagawa.jp/seismic-pra/basics/hazard-fragility.llms.md)

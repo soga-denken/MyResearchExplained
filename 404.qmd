@@ -1,0 +1,6 @@
+---
+title: "Page not found"
+description: "The page you asked for does not exist or has moved."
+---
+
+The page may have moved or been renamed. Go to the [home page](/index.html), or open a topic in the left panel.
